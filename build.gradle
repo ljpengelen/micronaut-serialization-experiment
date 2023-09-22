@@ -1,0 +1,82 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+
+    id("io.micronaut.application") version "4.1.1"
+
+    id("io.micronaut.test-resources") version "4.1.1"
+
+    id("io.micronaut.aot") version "4.1.1"
+
+    id("idea")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    ext {
+        lombokVersion = '1.18.28'
+
+        mapstructVersion = '1.5.5.Final'
+    }
+
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.projectlombok:lombok:$lombokVersion")
+
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
+
+    implementation("io.micronaut:micronaut-jackson-databind")
+
+    annotationProcessor("io.micronaut.data:micronaut-data-document-processor")
+    implementation("io.micronaut.data:micronaut-data-mongodb")
+    implementation("org.mongodb:mongodb-driver-sync")
+
+    implementation("io.micronaut:micronaut-http-client")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.yaml:snakeyaml")
+
+    testImplementation("org.assertj:assertj-core:3.24.2")
+
+    testImplementation("org.mock-server:mockserver-junit-jupiter:5.14.0")
+
+    testImplementation(platform("org.mockito:mockito-bom:5.5.0"))
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
+}
+
+application {
+    mainClass.set("nl.cofx.micronaut.jackson.MicronautJacksonApplication")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("micronaut4.*")
+    }
+    aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+    }
+}

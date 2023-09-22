@@ -1,0 +1,6 @@
+micronaut:
+  application:
+    name: micronaut-jackson-experiment
+
+services:
+  attribute-service.url: http://localhost:8080

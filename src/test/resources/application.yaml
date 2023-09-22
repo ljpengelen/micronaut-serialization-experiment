@@ -1,0 +1,2 @@
+services:
+  attribute-service.url: http://localhost:8080
