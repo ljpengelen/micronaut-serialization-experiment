@@ -7,5 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: tree
+      - uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 17
       - uses: gradle/gradle-build-action@v2
       - run: ./gradlew build
