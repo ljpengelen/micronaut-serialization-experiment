@@ -13,3 +13,7 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
       - run: ./gradlew build
+      - uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
