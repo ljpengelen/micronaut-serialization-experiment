@@ -66,7 +66,7 @@ class AttributeClientTest {
                     "id": "attributeId",
                     "category": "DOUBLE",
                     "parameters": {
-                        "firstVariableId": "firstVariableI",
+                        "firstVariableId": "firstVariableId",
                         "secondVariableId": "secondVariableId"
                     }
                 }""").withContentType(MediaType.APPLICATION_JSON));
