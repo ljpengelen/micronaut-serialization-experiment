@@ -15,7 +15,7 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
       - run: ./gradlew build
-      - uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      - uses: ljpengelen/junit-xml-action@main
         if: always()
         with:
-          files: '**/build/test-results/test/TEST-*.xml'
+          folder: build/test-results/test
